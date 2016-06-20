@@ -21,6 +21,9 @@ namespace Cleaner
             this.file_name = f;
         }
 
+        /// <summary>
+        /// This method only create an instance of the FileInfo and associate to an ExcelPackage
+        /// </summary>
         public void open()
         {
             try
@@ -72,6 +75,54 @@ namespace Cleaner
             }
         }   
 
+        public void Edit()
+        {
+            //Start with the worksheet in the position 1 not 0 
+            ExcelWorksheet workSheet = pck.Workbook.Worksheets[4];
+            BD mybd = new BD();
+
+            var start = workSheet.Dimension.Start;
+            var end = workSheet.Dimension.End;
+            DateTime today = new DateTime().Date;
+            string stoday = today.ToString();
+            string query = "insert into Articulos(Nombre,Descripcion,Codigo,Medidas,Material,Precio,PrecioPublico,IdCategoria,IdSubCategoria,FechaAlta) values(@nom,@desc,@cod,@med,@mat,@p,@pp,@idcat,@idsubcat,@fecha)";
+            mybd.OpenConnection();
+
+            string query2 = "select IdCategoria from Categorias where NombreCategoria = '@nom_categoria'";
+            for (int i = start.Column + 1; i <= end.Column; i++)
+            {
+                if(workSheet.Cells[i, 0].Value != null)
+                {
+                    string categoria = workSheet.Cells[i, 1].Value == null ? "No especificado" : workSheet.Cells[i, 1].Value.ToString();
+                    string subcategoria = workSheet.Cells[i, 2].Value == null ? "No especificado" : workSheet.Cells[i, 2].Value.ToString();
+                    string nombre = workSheet.Cells[i, 3].Value == null ? "No especificado" : workSheet.Cells[i, 3].Value.ToString();
+                    string codigo = workSheet.Cells[i, 4].Value == null ? "No especificado" : workSheet.Cells[i, 4].Value.ToString();
+                    string descripcion = workSheet.Cells[i, 5].Value == null ? "No especificado" : workSheet.Cells[i, 5].Value.ToString();
+                    string medidas = workSheet.Cells[i, 6].Value == null ? "No especificado" : workSheet.Cells[i, 6].Value.ToString();
+                    string material = workSheet.Cells[i, 7].Value == null ? "No especificado" : workSheet.Cells[i, 7].Value.ToString();
+                    string color = workSheet.Cells[i, 8].Value == null ? "No especificado" : workSheet.Cells[i, 8].Value.ToString();
+                    string precio = workSheet.Cells[i, 9].Value == null ? "No especificado" : workSheet.Cells[i, 9].Value.ToString();
+                    string precio_publico = workSheet.Cells[i, 10].Value == null ? "No especificado" : workSheet.Cells[i, 10].Value.ToString();
+
+                    string idcat = mybd.GetData(query2,categoria);
+                    string idsubcat = String.Empty;
+                    if (subcategoria != "No especificado")
+                    {
+                        query2 = "select IdPapa from Categorias where NombreCategoria='@nom_categoria'";
+                        idsubcat = mybd.GetData(query2, categoria); 
+                    } else
+                        idsubcat = "0";
+
+                    //Falta obtener los id categoria y id subcategoria si es que existen y meter a la tabla de colores lo correspondiente
+                    int success = mybd.Fill(query,categoria,subcategoria,nombre,codigo,descripcion,medidas,material,color,precio,precio_publico,idcat,idsubcat,stoday); 
+                }
+            }
+            mybd.CloseConnection();
+        }
+
+        /// <summary>
+        /// This method only open the Excel application with the file
+        /// </summary>
         public void openExcel() {
             System.Diagnostics.Process.Start(file_name);
         }
