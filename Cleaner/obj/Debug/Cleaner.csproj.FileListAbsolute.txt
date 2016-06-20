@@ -1,0 +1,11 @@
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\bin\Debug\Cleaner.exe.config
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\bin\Debug\Cleaner.exe
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\bin\Debug\Cleaner.pdb
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\bin\Debug\EPPlus.dll
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\bin\Debug\EPPlus.xml
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\obj\Debug\Cleaner.csprojResolveAssemblyReference.cache
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\obj\Debug\Cleaner.Form1.resources
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\obj\Debug\Cleaner.Properties.Resources.resources
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\obj\Debug\Cleaner.csproj.GenerateResource.Cache
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\obj\Debug\Cleaner.exe
+c:\users\adria\documents\visual studio 2015\Projects\Cleaner\Cleaner\obj\Debug\Cleaner.pdb
