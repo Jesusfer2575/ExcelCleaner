@@ -88,7 +88,7 @@ namespace Cleaner
             string query = "insert into Articulos(Nombre,Descripcion,Codigo,Medidas,Material,Precio,PrecioPublico,IdCategoria,IdSubCategoria,FechaAlta) values(@nom,@desc,@cod,@med,@mat,@p,@pp,@idcat,@idsubcat,@fecha)";
             mybd.OpenConnection();
 
-            string query2 = "select IdCategoria from Categorias where NombreCategoria = '@nom_categoria'";
+            string query2 = "select IdCategoria from Categorias where NombreCategoria = '@nom_categoria';";
             for (int i = start.Column + 1; i <= end.Column; i++)
             {
                 if(workSheet.Cells[i, 0].Value != null)
@@ -108,7 +108,7 @@ namespace Cleaner
                     string idsubcat = String.Empty;
                     if (subcategoria != "No especificado")
                     {
-                        query2 = "select IdPapa from Categorias where NombreCategoria='@nom_categoria'";
+                        query2 = "select IdCategoria from Categorias where NombreCategoria='@nom_categoria' and IdPapa!='0';";
                         idsubcat = mybd.GetData(query2, categoria); 
                     } else
                         idsubcat = "0";
