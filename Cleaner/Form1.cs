@@ -32,6 +32,7 @@ namespace Cleaner
             ExcelHandler libro = new ExcelHandler(name_path);
             libro.open();
             libro.Edit();
+            libro.editColors();
             label1.Text = "Éxito";
         }
     }

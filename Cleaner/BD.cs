@@ -45,6 +45,38 @@ namespace Cleaner
             return ans;
         }
 
+        public int Colors(string colores, string codigo)
+        {
+            string []colorsitos = trataColores(colores);
+            int total = 0;
+
+            string q = "select IdArticulo from Articulos where Codigo='" + codigo + "';";
+            SqlCommand com = new SqlCommand(q, objCon);
+            string cod = "";
+            try
+            {
+                cod = com.ExecuteScalar().ToString();
+            }
+            catch(Exception ex) { }
+            
+            string temp = "";
+
+            foreach (string colorsito in colorsitos)
+            {
+                if (colorsito == null)
+                    break;
+                temp += "insert into Existencias(IdArticulo,color,Existencia,Estatus) values(" + cod + ",'" + colorsito + "','1','1');";   
+            }
+            com = new SqlCommand(temp, objCon);
+            try
+            {
+                total += Int32.Parse(com.ExecuteScalar().ToString());
+            }
+            catch (Exception ex) { }
+            return total;
+
+        }
+
         /// <summary>
         /// This method make an insert for the database with the format of the excel file
         /// </summary>
@@ -65,18 +97,7 @@ namespace Cleaner
         /// <returns></returns>
         public int Fill(string query, string categoria, string subcategoria, string nombre, string codigo, string descripcion, string medidas, string material, string colores, string precio, string precio_publico, string idcat, string idsubcat, string stoday) {
 
-            /*string []colorsitos = trataColores(colores);
-
-            foreach(string colorsito in colorsitos)
-            {
-                string q = "select count(*) IdArticulo from Articulos where Codigo='" + codigo + "';";
-                SqlCommand com = new SqlCommand(query, objCon);
-                string cod = com.ExecuteScalar().ToString();
-                string temp = "insert into Existencias(IdArticulo,color,Existencia,Estatus) values(" + cod + ",'" + colorsito + "','1','1');";
-                com = new SqlCommand(temp,objCon);
-                com.ExecuteScalar();
-            }*/
-
+            
             //string query = "insert into Articulos(Nombre,Descripcion,Codigo,Medidas,Material,Precio,PrecioPublico,IdCategoria,IdSubCategoria,FechaAlta) values(@nom,@desc,@cod,@med,@mat,@p,@pp,@idcat,@idsubcat,@fecha)";
             
             /*command.Parameters.AddWithValue("@nom", nombre);

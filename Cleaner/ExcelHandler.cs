@@ -74,7 +74,27 @@ namespace Cleaner
                     //MessageBox.Show(strValue);
                 }
             }
-        }   
+        }
+
+        public void editColors()
+        {
+            //Start with the worksheet in the position 1 not 0 
+            ExcelWorksheet workSheet = pck.Workbook.Worksheets[1];
+            var start = workSheet.Dimension.Start;
+            var end = workSheet.Dimension.End;
+            BD mybd = new BD();
+
+            mybd.OpenConnection();
+            for (int i = start.Row + 1; i <= end.Row; i++)
+            {
+                if (workSheet.Cells[i, start.Column].Value != null)
+                {
+                    string codigo = workSheet.Cells[i, 5].Value == null ? "No especificado" : workSheet.Cells[i, 5].Value.ToString();
+                    string colores = workSheet.Cells[i, 9].Value == null ? "No especificado" : workSheet.Cells[i, 9].Value.ToString();
+                    int inserted = mybd.Colors(colores,codigo);
+                }
+            }
+        }
 
         public void Edit()
         {
