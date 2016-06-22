@@ -28,10 +28,10 @@ namespace Cleaner
         private void button1_Click(object sender, EventArgs e)
         {
             string nom = textBox1.Text;
-            string name_path = "C:\\Users\\adria\\Google Drive\\CLIENTES\\DOBLECERO\\FUENTE\\DobleCero\\CATALOGO.xlsx";
+            string name_path = "C:\\Users\\adria\\Google Drive\\CLIENTES\\DOBLECERO\\FUENTE\\DobleCero\\Libro1.xlsx";
             ExcelHandler libro = new ExcelHandler(name_path);
             libro.open();
-            libro.readFile();
+            libro.Edit();
             label1.Text = "Éxito";
         }
     }

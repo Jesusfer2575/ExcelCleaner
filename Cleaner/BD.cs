@@ -24,6 +24,27 @@ namespace Cleaner
             this.objCon.Open();
         }
 
+        private string[] trataColores(string colores) {
+            //Si contiene puntos o espacios en blanco se los quitamos
+            string temp = colores.Trim(new Char[] { ' ', '.' });
+
+            //Después filtramos por , ó + que son los caracteres por los cuales dependiendo del caso haremos Split 
+            string[] ans = new string[50];
+            if (temp.IndexOf(',') != -1)
+            {
+                ans = temp.Split(',');
+            }
+            else if (temp.IndexOf('+') != -1)
+            {
+                ans = temp.Split('+');
+            }
+            else
+            {
+                ans[0] = colores;
+            }
+            return ans;
+        }
+
         /// <summary>
         /// This method make an insert for the database with the format of the excel file
         /// </summary>
@@ -42,10 +63,23 @@ namespace Cleaner
         /// <param name="idsubcat"></param>
         /// <param name="stoday"></param>
         /// <returns></returns>
-        public int Fill(string query, string categoria, string subcategoria, string nombre, string codigo, string descripcion, string medidas, string material, string color, string precio, string precio_publico, string idcat, string idsubcat, string stoday) {
+        public int Fill(string query, string categoria, string subcategoria, string nombre, string codigo, string descripcion, string medidas, string material, string colores, string precio, string precio_publico, string idcat, string idsubcat, string stoday) {
+
+            /*string []colorsitos = trataColores(colores);
+
+            foreach(string colorsito in colorsitos)
+            {
+                string q = "select count(*) IdArticulo from Articulos where Codigo='" + codigo + "';";
+                SqlCommand com = new SqlCommand(query, objCon);
+                string cod = com.ExecuteScalar().ToString();
+                string temp = "insert into Existencias(IdArticulo,color,Existencia,Estatus) values(" + cod + ",'" + colorsito + "','1','1');";
+                com = new SqlCommand(temp,objCon);
+                com.ExecuteScalar();
+            }*/
+
             //string query = "insert into Articulos(Nombre,Descripcion,Codigo,Medidas,Material,Precio,PrecioPublico,IdCategoria,IdSubCategoria,FechaAlta) values(@nom,@desc,@cod,@med,@mat,@p,@pp,@idcat,@idsubcat,@fecha)";
-            SqlCommand command = new SqlCommand(query, objCon);
-            command.Parameters.AddWithValue("@nom", nombre);
+            
+            /*command.Parameters.AddWithValue("@nom", nombre);
             command.Parameters.AddWithValue("@desc", descripcion);
             command.Parameters.AddWithValue("@cod", codigo);
             command.Parameters.AddWithValue("@med", medidas);
@@ -54,9 +88,19 @@ namespace Cleaner
             command.Parameters.AddWithValue("@pp",precio_publico);
             command.Parameters.AddWithValue("@idcat", idcat);
             command.Parameters.AddWithValue("@idsubcat", idsubcat);
-            command.Parameters.AddWithValue("@fecha", stoday);
+            command.Parameters.AddWithValue("@fecha", stoday);*/
+            //Nombre,Descripcion,Codigo,Medidas,Material,Precio,PrecioPublico,IdCategoria,IdSubCategoria,FechaAlta
+            query = String.Format(query, nombre, descripcion, codigo, medidas, material, precio, precio_publico, idcat, idsubcat, stoday,"1");
+            SqlCommand command = new SqlCommand(query, objCon);
+            int rows = 0;
+            try
+            {
+                rows = command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
 
-            int rows = command.ExecuteNonQuery();
+            }
             return rows;
         }
 
@@ -77,12 +121,9 @@ namespace Cleaner
             return reader;
         }
 
-        public string GetData(string query,string categoria)
+        public string GetData(string query, string categoria)
         {
-
-            SqlCommand command = new SqlCommand(query,objCon);
-            
-            command.Parameters.AddWithValue("@nom_categoria",categoria);
+            SqlCommand command = new SqlCommand(query, objCon);
             int result = (Int32)command.ExecuteScalar();
 
             return result.ToString();
