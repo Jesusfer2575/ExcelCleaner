@@ -25,6 +25,11 @@ namespace Cleaner
 
         }
 
+        /// <summary>
+        /// Triggers the function to deal with all the problem
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             string nom = textBox1.Text;
@@ -34,6 +39,11 @@ namespace Cleaner
             libro.Edit();
             libro.editColors();
             label1.Text = "Éxito";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

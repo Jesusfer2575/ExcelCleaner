@@ -24,6 +24,11 @@ namespace Cleaner
             this.objCon.Open();
         }
 
+        /// <summary>
+        /// This method allow you to filtrate the string with the colors and make it the split
+        /// </summary>
+        /// <param name="colores"></param>
+        /// <returns></returns>
         private string[] trataColores(string colores) {
             //Si contiene puntos o espacios en blanco se los quitamos
             string temp = colores.Trim(new Char[] { ' ', '.' });
@@ -45,6 +50,12 @@ namespace Cleaner
             return ans;
         }
 
+        /// <summary>
+        /// This method has to implement after the Edit Method and put the information inside the "Existencias" table
+        /// </summary>
+        /// <param name="colores"></param>
+        /// <param name="codigo"></param>
+        /// <returns></returns>
         public int Colors(string colores, string codigo)
         {
             string []colorsitos = trataColores(colores);
@@ -142,6 +153,12 @@ namespace Cleaner
             return reader;
         }
 
+        /// <summary>
+        /// Get only  single value
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="categoria"></param>
+        /// <returns></returns>
         public string GetData(string query, string categoria)
         {
             SqlCommand command = new SqlCommand(query, objCon);
